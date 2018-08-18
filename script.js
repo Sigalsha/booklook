@@ -3,29 +3,20 @@ var source = $('#book-template').html();
 var template = Handlebars.compile(source);
 
 var fetch = function () {
+  $('.books-container').html('Loading, count to 5...');
   $.ajax({
     method: "GET",
     url: createUrl(),
     success: function (data) {
       //loop over all items
       //invoke something to show each item
-      for (i = 0; i < data.items.length;i++) {
-        newBook(infoObj(data.items[i].volumeInfo));
-      }
+      renderItems(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
+      $('.books-container').html('It seems that something is not working...Try refreshing the page');
     }
   });
-};
-
-$('.btn').on('click', function () {
-  fetch();
-});
-
-var newBook = function (obj) {
-  var newHTML = template(obj);
-  $('.books-container').append(newHTML);
 };
 
 var infoObj = function(info) {
@@ -38,21 +29,33 @@ var infoObj = function(info) {
   return obj;
 };
 
+var renderItems = function (data) {
+  let loopCount;
+  if (data.items.length <= 10) {
+    loopCount = data.items.length;
+  } else {
+    loopCount = 10;
+  }
+
+  for (i = 0; i < loopCount; i++) {
+      newBook(infoObj(data.items[i].volumeInfo));
+  } 
+};
+
 var createUrl = function() {
-    var isbnNum = $('#search').val();
-    var baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
-    var newUrl = baseUrl + isbnNum;
+    var bookTitle = $('#search').val();
+    var baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=intitle:';
+    var newUrl = baseUrl + bookTitle;
     return newUrl;
 };
-// Create a function that will create and append a new book 
-// to the page based on the response from the Google Books API. 
-// Invoke this function within the ajax success callback.
 
-        // var title = data.items[0].volumeInfo.title;
-        // const authors = data.items[0].volumeInfo.authors;  
-        // var description = data.items[0].volumeInfo.description;
-        // var image = data.items[0].volumeInfo.imageLinks.smallThumbnail;
-        // console.log(title);
-        // console.log(authors);
-        // console.log(description);
-        // console.log(image);
+$('.btn').on('click', function () {
+  fetch();
+});
+
+var newBook = function (obj) {
+  var newHTML = template(obj);
+  $('.books-container').append(newHTML);
+};
+
+

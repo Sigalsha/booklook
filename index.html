@@ -20,11 +20,11 @@
             
                 <div class="books-container"></div>
 
-                <div class="search-by-ISBN"><h5>Search by ISBN</h5></div>
+                <div class="search-by-title"><h5>Search by the book's title</h5></div>
    
                 <form>
                 <div class="form-group">
-                    <input type="text" id="search" class="form-control" placeholder="ISBN Number">
+                    <input type="text" id="search" class="form-control" placeholder="book title">
                 </div>
                 <button type="button" class="btn btn-primary">Search</button>
                 </form>
@@ -35,7 +35,7 @@
 
     <script id="book-template" type="text/x-handlebars-template">
             <div class="title">
-                <h1>{{title}}</h1>
+                <h2>{{title}}</h2>
             </div>
 
             <div class="description">
@@ -49,6 +49,7 @@
             <div class="image-book">
                 <img src="{{image}}"/>
             </div>
+            <br></br>
     </script>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
