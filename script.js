@@ -8,8 +8,6 @@ var fetch = function () {
     method: "GET",
     url: createUrl(),
     success: function (data) {
-      //loop over all items
-      //invoke something to show each item
       renderItems(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
