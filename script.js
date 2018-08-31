@@ -7,14 +7,15 @@ var fetch = function () {
   $.ajax({
     method: "GET",
     url: createUrl(),
-    success: function (data) {
+    })
+    .then((data)=> {
+      console.log(data);
       renderItems(data);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
+    })
+    .catch((jqXHR, textStatus, errorThrown)=>{
+      console.log(data);
       $('.books-container').html('It seems that something is not working...Try refreshing the page');
-    }
-  });
+    })
 };
 
 var infoObj = function(info) {
