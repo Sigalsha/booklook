@@ -4,7 +4,7 @@ var template = Handlebars.compile(source);
 
 var fetch = function () {
   $('.books-container').html('Loading, count to 5...');
-  $.ajax({
+  return $.ajax({
     method: "GET",
     url: createUrl(),
     })
@@ -12,8 +12,9 @@ var fetch = function () {
       console.log(data);
       renderItems(data);
     })
-    .catch((jqXHR, textStatus, errorThrown)=>{
-      console.log(data);
+    .catch((error)=>{
+      if (error) throw error;
+      console.log(error);
       $('.books-container').html('It seems that something is not working...Try refreshing the page');
     })
 };
